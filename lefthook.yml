@@ -1,0 +1,10 @@
+pre-commit:
+  commands:
+    lint:
+      run: pnpm eslint --fix {staged_files} && pnpm prettier --write {staged_files}
+    type-check:
+      run: pnpm tsc --noEmit
+pre-push:
+  commands:
+    test:
+      run: pnpm vitest run
