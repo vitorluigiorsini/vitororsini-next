@@ -1,7 +1,7 @@
 # Technical Specification: Vitor Orsini Portfolio
 
 ## Overview
-Full technical specification for the portfolio website, built with Next.js 16, TypeScript, Three.js, and Framer Motion.
+Full technical specification for the portfolio website, built with Next.js 16, TypeScript, Canvas 2D, and Framer Motion.
 
 ---
 
@@ -15,7 +15,7 @@ Full technical specification for the portfolio website, built with Next.js 16, T
 ### Software
 - **Node.js**: >=20.0.0 (LTS)
 - **Package Manager**: pnpm >=8.0.0
-- **Browser**: Modern browsers with WebGL2 support
+- **Browser**: Modern browsers with Canvas 2D support
 
 ---
 
@@ -28,9 +28,7 @@ Full technical specification for the portfolio website, built with Next.js 16, T
 | `next` | 16.2.6 | React framework (App Router) |
 | `react` | 18.3.1 | UI library |
 | `react-dom` | 18.3.1 | React DOM |
-| `three` | 0.182.0 | 3D engine (pinned for Clock stability) |
-| `@react-three/fiber` | 9.6.1 | Three.js React renderer |
-| `@react-three/drei` | 10.7.7 | Three.js helpers |
+
 | `framer-motion` | 11.15.0 | Animations |
 | `@emailjs/browser` | 4.4.1 | Email service |
 | `zod` | 3.23.8 | Schema validation |
@@ -61,7 +59,7 @@ vitororsini-next/                    # Project root
 ├── .next/                           # Build output (gitignored)
 ├── public/                          # Static assets served at /
 │   ├── images/                      # Images, icons, screenshots
-│   └── planet/                      # 3D Earth model files
+
 ├── src/
 │   ├── app/                         # App Router directory
 │   │   ├── layout.tsx               # Root Server Component (metadata, html/body, providers)
@@ -76,14 +74,11 @@ vitororsini-next/                    # Project root
 │   │   ├── Experience.tsx           # Vertical timeline
 │   │   ├── Tech.tsx                 # Skills tags
 │   │   ├── Projects.tsx             # Project cards
-│   │   ├── Contact.tsx              # Form + EarthCanvas
-│   │   ├── EarthCanvas.tsx          # Three.js Earth 3D
-│   │   ├── StarsCanvas.tsx          # Three.js starfield background
+│   │   ├── CanvasBackground.tsx     # Canvas 2D particle background
+│   │   ├── Contact.tsx              # Contact form
 │   │   ├── Footer.tsx               # Footer wrapper
 │   │   ├── CTA.tsx                  # Hero call-to-action buttons
 │   │   ├── Section.tsx              # Reusable section wrapper
-│   │   ├── Loader.tsx               # Three.js loading indicator
-│   │   └── index.ts                 # Barrel exports
 │   ├── contexts/
 │   │   └── LanguageContext.tsx       # i18n provider
 │   ├── hooks/
@@ -92,8 +87,7 @@ vitororsini-next/                    # Project root
 │       ├── constants.ts             # Design tokens, nav links, services, social links, SEO
 │       ├── translations.ts          # Flattened i18n data (en + pt)
 │       ├── validations.ts           # Zod schemas for contact + GitHub
-│       ├── utils.ts                 # Utility functions (cn, sectionStyles)
-│       └── three-setup.ts           # Suppress THREE.Clock deprecation warning
+│       └── utils.ts                 # Utility functions (cn, sectionStyles)
 ```
 
 ### Component Hierarchy
@@ -103,6 +97,7 @@ vitororsini-next/                    # Project root
   <body className="bg-primary text-text-primary" suppressHydrationWarning>
     <AppLanguageProvider>
       <div className="relative bg-primary">                   // page.tsx
+        <CanvasBackground />
         <div className="bg-hero-pattern">                     // Hero background
           <MobileNavbar />
           <Navbar />
@@ -113,8 +108,7 @@ vitororsini-next/                    # Project root
         <Section id="tech">     <Tech />      </Section>
         <Section id="projects"> <Projects />   </Section>
         <div className="relative z-0">
-          <Section id="contact"><Contact /></Section>  // contains EarthCanvas
-          <StarsCanvas />
+          <Section id="contact"><Contact /></Section>
           <Footer />
         </div>
         <BackToTop />
@@ -145,7 +139,6 @@ vitororsini-next/                    # Project root
 - **Static data** flows from `constants.ts` + `translations.ts` → components → render
 - **User input** flows from form → Zod validation → EmailJS API
 - **Language** state flows from LanguageContext → `t()` / `tv()` → translated strings
-- **3D** state managed internally by @react-three/fiber (no external state needed)
 
 ---
 
@@ -201,60 +194,35 @@ Unlayered CSS has **highest priority** in the cascade layer system. Therefore:
 
 ---
 
-## 5. Three.js Implementation
+## 5. Canvas 2D Background (`CanvasBackground.tsx`)
 
-### Dual Canvas Architecture
+A lightweight particle network animation using native Canvas 2D, replacing the previous Three.js implementation to improve Core Web Vitals and reduce bundle size.
 
-| Canvas | Location | Purpose | Props |
-|--------|----------|---------|-------|
-| **StarsCanvas** | Fixed position, z-index -1 | Background star field | Camera [0,0,1], `frustumCulled` |
-| **EarthCanvas** | Inside Contact section | Interactive 3D Earth | Camera [-4,3,6], `frameloop="demand"` |
+### Architecture
 
-### EarthCanvas Details
+| Aspect | Detail |
+|--------|--------|
+| **Render method** | `CanvasRenderingContext2D` via `<canvas>` element |
+| **Animation loop** | `requestAnimationFrame` with cleanup on unmount |
+| **Position** | `fixed inset-0 w-screen h-screen -z-1 pointer-events-none` |
+| **Dependencies** | None (vanilla JS) |
 
-```tsx
-<Canvas
-  shadows
-  frameloop="demand"                    // ← renders only on demand (scroll, interaction)
-  gl={{ preserveDrawingBuffer: true }}  // ← enables export/screenshot
-  camera={{ fov: 45, near: 0.1, far: 200, position: [-4, 3, 6] }}
-  onCreated={(state) => {
-    state.gl.domElement.addEventListener("webglcontextlost", (e) => e.preventDefault());
-  }}
->
-```
+### Particle System
 
-Key behaviors:
-- `webglcontextlost` handler prevents browser from blocking subsequent context creations
-- `frameloop="demand"` reduces GPU usage when Earth is not in view
-- `PreserveDrawingBuffer` enables copy-to-clipboard of canvas content
+| Parameter | Value | Purpose |
+|-----------|-------|---------|
+| `PARTICLE_COUNT` | 80 | Number of particles |
+| `CONNECTION_DISTANCE` | 120px | Max distance for drawing lines between particles |
+| `MOUSE_INFLUENCE` | 30px | Radius of mouse repulsion force |
+| `FADE_SPEED` | 0.02 | Rate at which particles fade in |
 
-### StarsCanvas Details
+### Behaviors
 
-```tsx
-function generateRandomPoints(count: number, radius: number): Float32Array {
-  const positions = new Float32Array(count * 3);
-  for (let i = 0; i < count; i++) {
-    const u = Math.random(), v = Math.random();
-    const theta = 2 * Math.PI * u;
-    const phi = Math.acos(2 * v - 1);
-    const r = radius * Math.cbrt(Math.random());
-    positions[i*3]   = r * Math.sin(phi) * Math.cos(theta);
-    positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-    positions[i*3+2] = r * Math.cos(phi);
-  }
-  return positions;
-}
-```
-
-- 5000 points uniformly distributed within a sphere (via inverse CDF method)
-- Slow continuous rotation via `useFrame` updating `rotation.x` and `rotation.y`
-- Points rendered with `PointMaterial` (size 0.002, color #f272c8, sizeAttenuation)
-
-### Known Three.js Constraint
-- **Version pinned to 0.182.0** because r183+ deprecates `THREE.Clock` in favor of `THREE.Timer`
-- `@react-three/fiber` still uses `THREE.Clock` internally, causing console warnings
-- The `src/lib/three-setup.ts` file suppresses the warning as a fallback for future version bumps
+- **Particles** drift with random velocity and bounce off viewport edges
+- **Connections** fade based on distance (closer = more opaque lines, `rgba(99,102,241, ...)`)
+- **Mouse interaction** repels nearby particles, creating a subtle ripple effect
+- **Cleanup** cancels `requestAnimationFrame`, clears particle array, removes event listeners on unmount — no memory leaks
+- **Resize** recalculates canvas dimensions on window resize
 
 ---
 
@@ -362,11 +330,7 @@ Run: `pnpm test` (Vitest in run mode, jsdom environment).
 | Symptom | Likely Cause | Fix |
 |---------|-------------|-----|
 | Hydration error (`cz-shortcut-listen`) | Browser extension adds attributes | `suppressHydrationWarning` on `<body>` |
-| WebGL "context loss and was blocked" | GPU crash from NaN values in geometry | Fix geometry data; clear browser cache |
-| `THREE.Clock` warning in console | three.js r183+ + r3f Clock usage | Pin three.js to 0.182.0 |
 | Tailwind classes not applying | Unlayered `* { margin:0 }` overrides `@layer utilities` | Remove unlayered universal selectors |
-| Stars not rendering | NaN from maath/random | Use inline generation (verified no NaN) |
-| Earth not rendering | Context blocked or model missing | Check `public/planet/` files; open incognito |
 
 ---
 
@@ -380,6 +344,15 @@ Run: `pnpm test` (Vitest in run mode, jsdom environment).
 ---
 
 ## 15. Changelog
+
+### 2.2.0 — May 2026 (Canvas 2D Background)
+- **Graphics**: Three.js + @react-three/fiber/drei → native Canvas 2D particle system
+- **Components removed**: `EarthCanvas.tsx`, `StarsCanvas.tsx`, `Loader.tsx`, `three-setup.ts`
+- **Component added**: `CanvasBackground.tsx` (vanilla JS, no deps)
+- **Deps removed**: `three`, `@react-three/fiber`, `@react-three/drei`, `maath`, `@types/three`
+- **Assets removed**: `public/planet/` (GLTF Earth model)
+- **CSS removed**: `.canvas-loader` and `mulShdSpin` animation
+- **Bundle**: Reduced by ~550KB (Three.js + R3F + model)
 
 ### 2.1.0 — May 2026 (Oxlint Migration)
 - **Linter**: ESLint + SonarJS → Oxlint

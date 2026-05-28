@@ -19,7 +19,7 @@ This document explains how to update text, images, projects, experience, and oth
 | Contact email / author name | `src/lib/constants.ts` → `CONTACT_INFO` |
 | EmailJS credentials | `.env` (copy from `.env.example`) |
 | Theme colors | `src/app/globals.css` → `@theme inline` |
-| 3D Earth model | `public/planet/` (replace GLTF files) |
+| Background animation | `src/components/CanvasBackground.tsx` (tune particles, colors, mouse) |
 | Logo / favicon | `public/images/logo.png` |
 
 ---
@@ -200,22 +200,24 @@ Changes apply globally.
 
 ---
 
-## 10. Replacing the 3D Earth
+## 10. Customizing the Canvas Background
 
-Files in `public/planet/`:
+The background is rendered by `src/components/CanvasBackground.tsx` using a native Canvas 2D particle system.
+
+**To tune visual parameters**, adjust the constants at the top of the file:
+
+```ts
+const PARTICLE_COUNT = 80;           // Number of particles
+const CONNECTION_DISTANCE = 120;     // Max distance for connections (px)
+const MOUSE_INFLUENCE = 30;          // Mouse repulsion radius (px)
+const FADE_SPEED = 0.02;             // Fade-in rate per frame
 ```
-planet/
-├── scene.gltf
-├── scene.bin
-└── textures/
-    ├── Clouds_baseColor.png
-    └── Planet_baseColor.png
-```
 
-**To replace:** Export your model as GLTF, replace all files, adjust `scale` in `EarthCanvas.tsx` if needed:
+**To change colors**, edit the `fillStyle` and `strokeStyle` values:
 
-```tsx
-<primitive object={earth.scene} scale={2.5} ... />
+```ts
+ctx.fillStyle = `rgba(99, 102, 241, ${p.alpha})`;               // Particle color
+ctx.strokeStyle = `rgba(99, 102, 241, ${alpha * 0.15})`;        // Connection line color
 ```
 
 ---
@@ -248,4 +250,4 @@ pnpm start       # Preview production build locally
 - **Browser console** (F12) — Shows hydration errors, WebGL warnings, 404s
 - **Tailwind IntelliSense** (VS Code extension) — Auto‑complete class names
 
-*Last updated: May 2026 (Oxlint, constants centralization)*
+*Last updated: May 2026 (Oxlint, constants centralization, Canvas 2D background)*

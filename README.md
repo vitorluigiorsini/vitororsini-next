@@ -1,10 +1,10 @@
 # Vitor Orsini | Portfolio
 
-A modern, minimalist 3D portfolio website built with **Next.js**, **TypeScript**, **Three.js**, and **Framer Motion**. Features a dark theme with sophisticated indigo accents, responsive design, smooth animations, and bilingual support (English/Portuguese).
+A modern, minimalist portfolio website built with **Next.js**, **TypeScript**, **Framer Motion**, and a **Canvas 2D** animated background. Features a dark theme with sophisticated indigo accents, responsive design, smooth animations, and bilingual support (English/Portuguese).
 
 ## Features
 
-- **3D Hero Section** — Interactive Three.js background with Earth and stars
+- **Canvas 2D Background** — Performant particle network animation with subtle mouse interaction, zero external dependencies
 - **Scroll Spy Navigation** — Automatic menu highlighting based on scroll position (desktop & mobile)
 - **Back to Top Button** — Floating button appears after scrolling (desktop only)
 - **Responsive Design** — Mobile-first approach with dedicated mobile navbar
@@ -12,7 +12,6 @@ A modern, minimalist 3D portfolio website built with **Next.js**, **TypeScript**
 - **Internationalization (i18n)** — English/Portuguese language toggle with flattened key-first structure
 - **Contact Form** — EmailJS integration with Zod validation
 - **Dark Theme** — Professional minimalist aesthetic with glass morphism effects
-- **WebGL Optimization** — Context loss handling and hydration error suppression
 
 ## Tech Stack
 
@@ -23,7 +22,7 @@ A modern, minimalist 3D portfolio website built with **Next.js**, **TypeScript**
 | **Package Manager** | pnpm |
 | **Styling** | Tailwind CSS v4 (CSS-based config) |
 | **Animations** | Framer Motion |
-| **3D Graphics** | Three.js 0.182, @react-three/fiber 9.6, @react-three/drei 10.7 |
+| **Background** | Canvas 2D (vanilla, no deps) |
 | **Forms** | EmailJS, Zod |
 | **Testing** | Vitest |
 | **Code Quality** | Oxlint, TypeScript strict mode |
@@ -50,8 +49,7 @@ NEXT_PUBLIC_EMAILJS_API=your_emailjs_api_key
 
 ```
 ├── public/                    # Static assets
-│   ├── images/                # Site images (optimized)
-│   └── planet/                # 3D Earth model (GLTF + textures)
+│   └── images/                # Site images (optimized)
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx         # Root layout (metadata, Inter font, providers)
@@ -61,8 +59,8 @@ NEXT_PUBLIC_EMAILJS_API=your_emailjs_api_key
 │   │   ├── Navbar.tsx, MobileNavbar.tsx, BackToTop.tsx
 │   │   ├── Hero.tsx, About.tsx, Experience.tsx
 │   │   ├── Tech.tsx, Projects.tsx, Contact.tsx
-│   │   ├── EarthCanvas.tsx, StarsCanvas.tsx
-│   │   ├── Footer.tsx, CTA.tsx, Section.tsx, Loader.tsx
+│   │   ├── CanvasBackground.tsx
+│   │   ├── Footer.tsx, CTA.tsx, Section.tsx
 │   │   └── index.ts
 │   ├── contexts/
 │   │   └── LanguageContext.tsx    # i18n provider (t/tv)
@@ -109,6 +107,7 @@ NEXT_PUBLIC_EMAILJS_API=your_emailjs_api_key
 
 ## Key Decisions
 
+- **Canvas 2D** over Three.js — zero dependencies, better Core Web Vitals, smaller bundle
 - **Next.js App Router** over Vite for SEO, SSR, and Vercel deployment
 - **TypeScript** for type safety
 - **pnpm** for strict deps and speed
