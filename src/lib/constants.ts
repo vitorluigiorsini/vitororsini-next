@@ -24,6 +24,23 @@ export type Experience = (typeof experiences)[number];
 export type Technology = (typeof technologies)[number];
 export type Project = (typeof projects)[number];
 
+export const SOCIAL_LINKS = {
+  github: "https://github.com/vitorluigiorsini/",
+  linkedin: "https://www.linkedin.com/in/vitorluigiorsini/",
+  whatsapp: "https://wa.me/5531993474431",
+} as const;
+
+export const CONTACT_INFO = {
+  email: "vitorluigiorsini@gmail.com",
+  authorName: "Vitor Orsini",
+} as const;
+
+export const SEO = {
+  title: "Vitor Orsini | Portfolio",
+  description:
+    "Software Engineer specializing in TypeScript, React, and Node.js. Full-stack developer with expertise in serverless architecture and AWS cloud.",
+} as const;
+
 export const STYLES = {
   paddingX: "sm:px-8 px-4",
   paddingY: "sm:py-12 py-8",

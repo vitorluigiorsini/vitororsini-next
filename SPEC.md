@@ -46,10 +46,7 @@ Full technical specification for the portfolio website, built with Next.js 16, T
 | `tailwindcss` | 4.3.0 | CSS framework |
 | `@tailwindcss/postcss` | ^4.0 | PostCSS plugin (Tailwind v4) |
 | `vitest` | 1.6.0 | Unit testing |
-| `eslint` | 8.57.0 | Linter |
-| `eslint-plugin-sonarjs` | 1.0.4 | SonarJS rules |
-| `@eslint/js` | 9.4.0 | ESLint core |
-| `@typescript-eslint/*` | 7.18.0 | TypeScript ESLint |
+| `oxlint` | 1.67.0 | Linter |
 | `lefthook` | 1.11.0 | Git hooks |
 
 ---
@@ -60,6 +57,7 @@ Full technical specification for the portfolio website, built with Next.js 16, T
 
 ```
 vitororsini-next/                    # Project root
+├── .oxlintrc.json                   # Oxlint configuration
 ├── .next/                           # Build output (gitignored)
 ├── public/                          # Static assets served at /
 │   ├── images/                      # Images, icons, screenshots
@@ -91,7 +89,7 @@ vitororsini-next/                    # Project root
 │   ├── hooks/
 │   │   └── useScrollSpy.ts          # Scroll position → active section
 │   └── lib/
-│       ├── constants.ts             # Design tokens, nav links, services
+│       ├── constants.ts             # Design tokens, nav links, services, social links, SEO
 │       ├── translations.ts          # Flattened i18n data (en + pt)
 │       ├── validations.ts           # Zod schemas for contact + GitHub
 │       ├── utils.ts                 # Utility functions (cn, sectionStyles)
@@ -264,20 +262,24 @@ function generateRandomPoints(count: number, radius: number): Float32Array {
 
 ### Translation System
 
-**Data:** `src/lib/translations.ts` — flattened key-first object with `en` and `pt` keys.
+**Data:** `src/lib/translations.ts` — flattened key-first object where each entry has `{ "pt-br": "...", en: "..." }` language pairs.
 
 ```ts
 export const translations = {
-  en: { heroText: { greeting: "Hello I'm", role: "Software Engineer" } },
-  pt: { heroText: { greeting: "Olá, sou", role: "Engenheiro de Software" } },
+  heroText: {
+    greeting: { "pt-br": "Oi, sou o", en: "Hi, I'm" },
+    name: { "pt-br": "Vitor Orsini", en: "Vitor Orsini" },
+    role: { "pt-br": "Sou Engenheiro de Software", en: "I'm a Software Engineer" },
+  },
+  // ...
 };
 ```
 
 **Hook API (LanguageContext):**
 | Function | Signature | Purpose |
 |----------|-----------|---------|
-| `t` | `(keyPath: string) => string` | Translate a string paths like `"heroText.greeting"` |
-| `tv` | `(value: unknown) => unknown` | Translate objects/arrays (recursive) |
+| `t` | `(obj: TranslationPair) => string` | Translate a TranslationPair object by current language |
+| `tv` | `(value: unknown) => string \| string[]` | Translate objects/arrays (recursive) |
 
 **Persistence:** Language preference stored in `sessionStorage` (survives page refresh within session).
 
@@ -327,8 +329,7 @@ Run: `pnpm test` (Vitest in run mode, jsdom environment).
 
 | Tool | Config | Purpose |
 |------|--------|---------|
-| ESLint | `eslint.config.mjs` (flat config) | Catch errors + enforce style |
-| SonarJS | plugin within ESLint | Static analysis (security, bugs, code smell) |
+| Oxlint | `.oxlintrc.json` | Fast linter (correctness + suspicious + perf) |
 | TypeScript | `tsconfig.json` (strict: true) | Type safety |
 | Lefthook | `lefthook.yml` | Pre-commit hooks (lint + typecheck + test) |
 
@@ -379,6 +380,12 @@ Run: `pnpm test` (Vitest in run mode, jsdom environment).
 ---
 
 ## 15. Changelog
+
+### 2.1.0 — May 2026 (Oxlint Migration)
+- **Linter**: ESLint + SonarJS → Oxlint
+- **Config**: Removed `eslint.config.mjs`; added `.oxlintrc.json`
+- **Scripts**: `lint` now runs `oxlint` instead of `eslint`
+- **Next.js**: No `eslint` config needed (Next.js 16 no longer runs lint during build)
 
 ### 2.0.0 — May 2026 (Next.js Migration)
 - **Framework**: Vite → Next.js 16 App Router

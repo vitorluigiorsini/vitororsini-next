@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { SEO } from "@/lib/constants";
 import { AppLanguageProvider } from "@/contexts/LanguageContext";
 
 const inter = Inter({
@@ -9,9 +10,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Vitor Orsini | Portfolio",
-  description:
-    "Software Engineer specializing in TypeScript, React, and Node.js. Full-stack developer with expertise in serverless architecture and AWS cloud.",
+  title: SEO.title,
+  description: SEO.description,
   icons: { icon: "/images/logo.png" },
 };
 

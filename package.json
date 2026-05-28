@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "oxlint",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
@@ -34,11 +34,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.184.1",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.6",
-    "eslint-plugin-sonarjs": "^4.0.3",
     "jsdom": "^29.1.1",
     "lefthook": "^2.1.8",
+    "oxlint": "^1.67.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.7"

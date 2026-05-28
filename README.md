@@ -26,7 +26,7 @@ A modern, minimalist 3D portfolio website built with **Next.js**, **TypeScript**
 | **3D Graphics** | Three.js 0.182, @react-three/fiber 9.6, @react-three/drei 10.7 |
 | **Forms** | EmailJS, Zod |
 | **Testing** | Vitest |
-| **Code Quality** | ESLint + SonarJS, TypeScript strict mode |
+| **Code Quality** | Oxlint, TypeScript strict mode |
 | **Git Hooks** | Lefthook |
 
 ## Quick Start
@@ -69,7 +69,7 @@ NEXT_PUBLIC_EMAILJS_API=your_emailjs_api_key
 │   ├── hooks/
 │   │   └── useScrollSpy.ts        # Scroll-based section detection
 │   └── lib/
-│       ├── constants.ts            # Design tokens, static data
+│       ├── constants.ts            # Design tokens, static data, social links, SEO
 │       ├── translations.ts         # i18n (flattened key-first)
 │       ├── validations.ts          # Zod schemas
 │       ├── utils.ts                # Shared utilities
@@ -77,6 +77,7 @@ NEXT_PUBLIC_EMAILJS_API=your_emailjs_api_key
 ├── .env.example
 ├── eslint.config.mjs
 ├── lefthook.yml
+├── .oxlintrc.json
 ├── next.config.ts
 ├── postcss.config.mjs
 ├── tsconfig.json
@@ -90,7 +91,7 @@ NEXT_PUBLIC_EMAILJS_API=your_emailjs_api_key
 | `pnpm dev` | Start development server (Turbopack) |
 | `pnpm build` | Build for production |
 | `pnpm start` | Start production server |
-| `pnpm lint` | Run ESLint checks |
+| `pnpm lint` | Run Oxlint checks |
 | `pnpm typecheck` | Run TypeScript type checking |
 | `pnpm test` | Run Vitest unit tests |
 

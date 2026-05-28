@@ -14,6 +14,7 @@ export const translations = {
 
   heroText: {
     greeting: { "pt-br": "Oi, sou o", en: "Hi, I'm" },
+    name: { "pt-br": "Vitor Orsini", en: "Vitor Orsini" },
     role: { "pt-br": "Sou Engenheiro de Software", en: "I'm a Software Engineer" },
   },
 

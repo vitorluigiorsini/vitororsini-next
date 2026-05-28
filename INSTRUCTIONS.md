@@ -13,9 +13,11 @@ This document explains how to update text, images, projects, experience, and oth
 | Experience timeline | `src/lib/translations.ts` → `experience` |
 | Technologies / skills | `src/lib/translations.ts` → `technologies` |
 | Profile image | `public/images/` + `globals.css` (`--background-image-profile`) |
-| Social URLs | `src/lib/constants.ts` + hardcoded in `Navbar.tsx` |
+| Social URLs | `src/lib/constants.ts` → `SOCIAL_LINKS` |
+| Footer copyright | `src/lib/translations.ts` → `heroText.name` |
+| SEO title/description | `src/lib/constants.ts` → `SEO` |
+| Contact email / author name | `src/lib/constants.ts` → `CONTACT_INFO` |
 | EmailJS credentials | `.env` (copy from `.env.example`) |
-| SEO title/description | `src/app/layout.tsx` → `metadata` |
 | Theme colors | `src/app/globals.css` → `@theme inline` |
 | 3D Earth model | `public/planet/` (replace GLTF files) |
 | Logo / favicon | `public/images/logo.png` |
@@ -28,34 +30,39 @@ All text content is in `src/lib/translations.ts`. There are two language objects
 
 ### Structure
 
+The translations are a **flattened key-first** object where each entry has language pairs:
+
 ```ts
 export const translations = {
-  en: {
-    heroText: { greeting: "Hello I'm", role: "Software Engineer" },
-    aboutText: { title: "About Me", subtitle: "Professional Summary" },
-    // ... all sections
+  heroText: {
+    greeting: { "pt-br": "Oi, sou o", en: "Hi, I'm" },
+    name: { "pt-br": "Vitor Orsini", en: "Vitor Orsini" },
+    // ...
   },
-  pt: {
-    heroText: { greeting: "Olá, sou", role: "Engenheiro de Software" },
-    aboutText: { title: "Sobre Mim", subtitle: "Resumo Profissional" },
-    // ... all sections
+  aboutText: {
+    title: { "pt-br": "Introdução", en: "Introduction" },
+    subtitle: { "pt-br": "Sobre", en: "Overview" },
+    // ...
   },
+  // ... all sections
 };
 ```
 
 ### How‑to
 1. Open `src/lib/translations.ts`
-2. Find the key you want to change (component code references keys via `t('sectionText.key')`)
-3. Edit the value in both `en` and `pt`
+2. Find the key you want to change (component code references keys as top-level objects, e.g. `heroText.greeting`)
+3. Edit the value in both `"pt-br"` and `en` for that key
 4. Save — the dev server hot‑reloads instantly
 
 ### Finding which key maps to which text
-Search for `t(` inside the component. Example:
+Search for `t(` inside the component or check the import from `@/lib/constants`. Example:
 ```tsx
 // In Hero.tsx
+import { heroText } from "@/lib/constants";
+// ...
 <h1>{t(heroText.greeting)}</h1>
 ```
-This tells you the key is `heroText.greeting`.
+This tells you the key is `heroText.greeting` in `translations.ts`.
 
 ---
 
@@ -134,15 +141,17 @@ Add or remove names. Icons must be present in `public/images/icon-[name].png` (l
 
 ## 6. Updating Social Media Links
 
-Edit `src/components/Navbar.tsx` — each icon button calls `window.open(url, ...)`:
+Edit `src/lib/constants.ts` — update the `SOCIAL_LINKS` object:
 
-```tsx
-<button onClick={() => window.open("https://github.com/your-username", ...)}>
-  <img src="/images/icon-github.png" alt="GitHub" />
-</button>
+```ts
+export const SOCIAL_LINKS = {
+  github: "https://github.com/your-username",
+  linkedin: "https://linkedin.com/in/your-username",
+  whatsapp: "https://wa.me/your-number",
+};
 ```
 
-Change the URL string in each button's `onClick`.
+All icon buttons in `Navbar.tsx` reference these constants automatically.
 
 ---
 
@@ -162,15 +171,16 @@ Restart the dev server after changing `.env`.
 
 ## 8. Updating SEO
 
-Edit `src/app/layout.tsx`:
+Edit `src/lib/constants.ts` — update the `SEO` object:
 
 ```ts
-export const metadata = {
+export const SEO = {
   title: "Vitor Orsini | Portfolio",
   description: "Your SEO description.",
-  icons: { icon: "/images/logo.png" },
 };
 ```
+
+The metadata in `src/app/layout.tsx` reads from `SEO` automatically.
 
 ---
 
@@ -223,7 +233,7 @@ planet/
 Always run these commands:
 
 ```bash
-pnpm lint        # Catch ESLint errors
+pnpm lint        # Catch Oxlint errors
 pnpm typecheck   # Catch TypeScript errors
 pnpm test        # Verify unit tests pass
 pnpm build       # Verify production build succeeds
@@ -238,4 +248,4 @@ pnpm start       # Preview production build locally
 - **Browser console** (F12) — Shows hydration errors, WebGL warnings, 404s
 - **Tailwind IntelliSense** (VS Code extension) — Auto‑complete class names
 
-*Last updated: May 2026*
+*Last updated: May 2026 (Oxlint, constants centralization)*

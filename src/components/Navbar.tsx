@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { navLinks } from "@/lib/constants";
+import { navLinks, SOCIAL_LINKS } from "@/lib/constants";
 import { useAppLanguageContext } from "@/contexts/LanguageContext";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 
@@ -45,7 +45,7 @@ export function Navbar() {
             <div className="flex items-center xs:gap-3 gap-2">
               <button
                 onClick={() =>
-                  window.open("https://github.com/vitorluigiorsini/", "_blank", "noopener")
+                  window.open(SOCIAL_LINKS.github, "_blank", "noopener")
                 }
                 className="opacity-60 hover:opacity-100 xs:h-7 xs:w-7 h-6 w-6 rounded-full flex justify-center items-center cursor-pointer"
                 aria-label="GitHub"
@@ -54,11 +54,7 @@ export function Navbar() {
               </button>
               <button
                 onClick={() =>
-                  window.open(
-                    "https://www.linkedin.com/in/vitorluigiorsini/",
-                    "_blank",
-                    "noopener"
-                  )
+                  window.open(SOCIAL_LINKS.linkedin, "_blank", "noopener")
                 }
                 className="opacity-60 hover:opacity-100 xs:h-7 xs:w-7 h-6 w-6 rounded-full flex justify-center items-center cursor-pointer"
                 aria-label="LinkedIn"
@@ -67,7 +63,7 @@ export function Navbar() {
               </button>
               <button
                 onClick={() =>
-                  window.open("https://wa.me/5531993474431", "_blank", "noopener")
+                  window.open(SOCIAL_LINKS.whatsapp, "_blank", "noopener")
                 }
                 className="opacity-60 hover:opacity-100 xs:h-7 xs:w-7 h-6 w-6 rounded-full flex justify-center items-center cursor-pointer"
                 aria-label="WhatsApp"

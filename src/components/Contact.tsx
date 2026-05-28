@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { STYLES, contactText } from "@/lib/constants";
+import { CONTACT_INFO, STYLES, contactText } from "@/lib/constants";
 import { useAppLanguageContext } from "@/contexts/LanguageContext";
 import { Section } from "./Section";
 import { EarthCanvas } from "./EarthCanvas";
@@ -78,8 +78,8 @@ export function Contact() {
         {
           from_name: form.name,
           from_email: form.email,
-          to_name: "Vitor Orsini",
-          to_email: "vitorluigiorsini@gmail.com",
+          to_name: CONTACT_INFO.authorName,
+          to_email: CONTACT_INFO.email,
           message: form.message,
           reply_to: form.email,
         },
