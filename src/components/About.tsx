@@ -70,7 +70,7 @@ export function About() {
       </motion.div>
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-text-secondary max-w-3xl"
+        className="mt-4 text-text-secondary max-w-3xl whitespace-pre-line"
       >
         {t(aboutText.about)}
       </motion.p>
