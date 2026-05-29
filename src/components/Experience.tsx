@@ -40,7 +40,7 @@ function ExperienceCard({ experience }: ExperienceCardProps) {
       date={tv(experience.date) as string}
       iconStyle={{ background: experience.iconBg }}
       icon={
-        <div className="flex justify-center items-center w-full h-full">
+        <div className="flex justify-center items-center w-full h-full p-1">
           <img
             src={experience.icon}
             alt={experience.company_name}
