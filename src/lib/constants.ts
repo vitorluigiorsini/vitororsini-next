@@ -38,7 +38,7 @@ export const CONTACT_INFO = {
 export const SEO = {
   title: "Vitor Orsini | Portfolio",
   description:
-    "Software Engineer specializing in TypeScript, React, and Node.js. Full-stack developer with expertise in serverless architecture and AWS cloud.",
+    "Portfolio moderno de Vitor Orsini construído com Next.js 16, TypeScript e Tailwind CSS. Features Canvas 2D background animado, suporte multilíngue (PT/EN), animações Framer Motion e design responsivo.",
 } as const;
 
 export const STYLES = {

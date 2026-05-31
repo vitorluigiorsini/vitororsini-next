@@ -12,6 +12,7 @@ A modern, minimalist portfolio website built with **Next.js**, **TypeScript**, *
 - **Internationalization (i18n)** — English/Portuguese language toggle with flattened key-first structure
 - **Contact Form** — EmailJS integration with Zod validation
 - **Dark Theme** — Professional minimalist aesthetic with glass morphism effects
+- **Consistent UI** — Standardized button sizing, fixed-width CTA and contact buttons, responsive typography with mobile-optimized hero text
 
 ## Tech Stack
 
@@ -116,6 +117,8 @@ NEXT_PUBLIC_EMAILJS_API=your_emailjs_api_key
 - **Flattened i18n** (~55% smaller vs nested structure)
 - **Section component** instead of SectionWrapper HOC
 - **No DDD / overengineering** — flat structure, pragmatic code
+- **Standardized buttons** — Fixed-width CTA and contact buttons prevent layout shifts across languages
+- **Consistent project cards** — Fixed card height (420px) with line-clamp for uniform layout
 
 ## Browser Support
 

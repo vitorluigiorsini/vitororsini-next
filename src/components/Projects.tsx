@@ -56,41 +56,41 @@ function ProjectCard({
   const { tv } = useAppLanguageContext();
 
   return (
-    <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
-      <div className="bg-gray-900/60 backdrop-blur p-4 rounded-xl sm:w-[360px] w-full border border-white/5">
-        <div className="relative w-full h-[200px] rounded-xl overflow-hidden">
-          <img src={image} alt={name} className="w-full h-full object-cover" />
-        </div>
+      <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
+        <div className="bg-gray-900/60 backdrop-blur p-4 rounded-xl sm:w-[360px] w-full border border-white/5 flex flex-col h-[420px]">
+          <div className="relative w-full h-[200px] rounded-xl overflow-hidden flex-shrink-0">
+            <img src={image} alt={name} className="w-full h-full object-cover" />
+          </div>
 
-        <div className="mt-4">
-          <div className="flex justify-between items-center">
-            <h3 className="text-text-primary font-bold text-xl">{name}</h3>
-            <div className="flex justify-end m-2">
-              <div
-                onClick={() => window.open(source_code_link, "_blank")}
-                className="bg-black/50 hover:bg-black/70 p-1 w-8 h-8 rounded-full flex justify-center items-center cursor-pointer transition-all duration-150"
-              >
-                <img src="/images/github.png" alt="github" className="w-5 h-5" />
+          <div className="mt-4 flex flex-col flex-1">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-text-primary font-bold text-xl">{name}</h3>
+              <div className="flex justify-end m-2">
+                <div
+                  onClick={() => window.open(source_code_link, "_blank")}
+                  className="bg-black/50 hover:bg-black/70 p-1 w-8 h-8 rounded-full flex justify-center items-center cursor-pointer transition-all duration-150"
+                >
+                  <img src="/images/github.png" alt="github" className="w-5 h-5" />
+                </div>
               </div>
             </div>
-          </div>
-          <p className="mt-2 text-text-sm text-text-sm">
-            {tv(description) as string}
-          </p>
-        </div>
-
-        <div className="mt-3 flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <p
-              key={tag.name}
-              className="text-xs text-text-secondary bg-gray-800/50 px-2 py-0.5 rounded"
-            >
-              #{tag.name}
+            <p className="mt-2 text-text-sm text-text-sm line-clamp-3 flex-1">
+              {tv(description) as string}
             </p>
-          ))}
+          </div>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <p
+                key={tag.name}
+                className="text-xs text-text-secondary bg-gray-800/50 px-2 py-0.5 rounded"
+              >
+                #{tag.name}
+              </p>
+            ))}
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
   );
 }
 

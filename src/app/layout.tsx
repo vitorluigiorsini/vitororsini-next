@@ -12,6 +12,21 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: SEO.title,
   description: SEO.description,
+  keywords: [
+    "Vitor Orsini",
+    "portfolio",
+    "desenvolvedor frontend",
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "Framer Motion",
+    "Canvas 2D",
+    "React",
+    "JavaScript",
+    "desenvolvedor full-stack",
+    "site pessoal",
+    "curriculum online",
+  ] as const,
   icons: { icon: "/images/logo.png" },
 };
 

@@ -345,6 +345,15 @@ Run: `pnpm test` (Vitest in run mode, jsdom environment).
 
 ## 15. Changelog
 
+### 2.3.0 — May 2026 (UI Standardization & SEO)
+- **SEO**: Updated description to reflect actual tech stack (Next.js, Tailwind, Canvas 2D); added `keywords` metadata to layout
+- **Translation**: Fixed Portfolio project description (removed incorrect Three.js/React references); shortened CTA "Let's talk" → "Talk"; removed ellipsis from loading text
+- **Project cards**: Standardized to fixed height (420px) with line-clamp-3 for uniform layout
+- **Buttons**: Fixed width (w-36) for CTA and contact buttons to prevent layout shifts across languages; added cursor-pointer to all interactive elements
+- **Copy email**: Reduced to icon-sized button (w-12 h-12)
+- **Hero**: Reduced heading font size on mobile (text-5xl → text-3xl) for better responsive typography
+- **Bug fix**: Removed duplicated CTA button
+
 ### 2.2.0 — May 2026 (Canvas 2D Background)
 - **Graphics**: Three.js + @react-three/fiber/drei → native Canvas 2D particle system
 - **Components removed**: `EarthCanvas.tsx`, `StarsCanvas.tsx`, `Loader.tsx`, `three-setup.ts`

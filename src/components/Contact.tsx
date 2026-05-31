@@ -92,7 +92,7 @@ export function Contact() {
             </p>
             <button
               onClick={handleCopyEmail}
-              className="flex mx-auto mt-4 bg-secondary text-text-primary hover:bg-secondary/90 py-2 px-4 outline-none w-fit text-sm rounded-lg transition-all duration-150 transform hover:-translate-y-0.5 active:translate-y-0"
+              className="flex mx-auto mt-4 bg-secondary text-text-primary hover:bg-secondary/90 p-2.5 outline-none w-12 h-12 text-sm rounded-md transition-all duration-150 transform hover:-translate-y-0.5 active:translate-y-0 items-center justify-center cursor-pointer"
             >
               ✉️
             </button>
@@ -161,13 +161,13 @@ export function Contact() {
 
           <label className="flex justify-center text-sm">{sentMessage}</label>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-secondary text-text-primary hover:bg-secondary/90 py-3 px-8 outline-none w-fit text-sm font-bold shadow-md shadow-primary rounded-lg transition-all duration-150 transform hover:-translate-y-0.5 active:translate-y-0"
-          >
-            {loading ? t(contactText.sending) : t(contactText.send)}
-          </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex mx-auto mt-4 bg-secondary text-text-primary hover:bg-secondary/90 py-3 px-6 outline-none w-36 text-sm font-bold shadow-md shadow-primary rounded-lg transition-all duration-150 transform hover:-translate-y-0.5 active:translate-y-0 items-center justify-center cursor-pointer disabled:cursor-not-allowed"
+            >
+              {loading ? t(contactText.sending) : t(contactText.send)}
+            </button>
         </form>
       </div>
     </Section>

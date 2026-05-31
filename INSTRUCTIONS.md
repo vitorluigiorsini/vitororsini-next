@@ -16,6 +16,7 @@ This document explains how to update text, images, projects, experience, and oth
 | Social URLs | `src/lib/constants.ts` → `SOCIAL_LINKS` |
 | Footer copyright | `src/lib/translations.ts` → `heroText.name` |
 | SEO title/description | `src/lib/constants.ts` → `SEO` |
+| SEO keywords | `src/app/layout.tsx` → `metadata.keywords` |
 | Contact email / author name | `src/lib/constants.ts` → `CONTACT_INFO` |
 | EmailJS credentials | `.env` (copy from `.env.example`) |
 | Theme colors | `src/app/globals.css` → `@theme inline` |
@@ -182,6 +183,8 @@ export const SEO = {
 
 The metadata in `src/app/layout.tsx` reads from `SEO` automatically.
 
+**Keywords** are defined directly in `src/app/layout.tsx` inside the `metadata.keywords` array. Add or remove terms as needed for better search engine relevance.
+
 ---
 
 ## 9. Changing Colors
@@ -250,4 +253,4 @@ pnpm start       # Preview production build locally
 - **Browser console** (F12) — Shows hydration errors, WebGL warnings, 404s
 - **Tailwind IntelliSense** (VS Code extension) — Auto‑complete class names
 
-*Last updated: May 2026 (Oxlint, constants centralization, Canvas 2D background)*
+*Last updated: May 2026 (SE0 keywords, standardized buttons, project card sizing)*

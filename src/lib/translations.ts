@@ -15,14 +15,14 @@ export const translations = {
   heroText: {
     greeting: { "pt-br": "Oi, sou o", en: "Hi, I'm" },
     name: { "pt-br": "Vitor Orsini", en: "Vitor Orsini" },
-    role: { "pt-br": "Sou Engenheiro de Software", en: "I'm a Software Engineer" },
+    role: { "pt-br": "Engenheiro de Software", en: "Software Engineer" },
   },
 
-  CTAText: {
-    download: { "pt-br": "Download CV", en: "Download CV" },
-    contact: { "pt-br": "Vamos conversar", en: "Let's talk" },
-    cvURL: "https://drive.google.com/file/d/1O9L4upOMLzdAm3qEHuFTYRNCSBEOg8_1/view?usp=drive_link",
-  },
+   CTAText: {
+     download: { "pt-br": "Download CV", en: "Download CV" },
+     contact: { "pt-br": "Conversar", en: "Let's talk" },
+     cvURL: "https://drive.google.com/file/d/1O9L4upOMLzdAm3qEHuFTYRNCSBEOg8_1/view?usp=drive_link",
+   },
 
   aboutText: {
     title: { "pt-br": "Introdução", en: "Introduction" },
@@ -148,19 +148,6 @@ export const translations = {
 
   projects: [
     {
-      name: "OneBitSports",
-      description: {
-        "pt-br": "Landing page para fornecer informações e notícias sobre esportes com um design bonito e responsivo.",
-        en: "Landing page to provide information and news about sports with a beaultiful and responsive design.",
-      },
-      tags: [
-        { name: "HTML", color: "blue-text-gradient" },
-        { name: "CSS", color: "green-text-gradient" },
-      ],
-      image: "/images/projects/onebitsports.png",
-      source_code_link: "https://github.com/vitorluigiorsini/onebitsports",
-    },
-    {
       name: "Doctorcare",
       description: {
         "pt-br": "Landing page de alta conversão, construída com design moderno e responsivo para atingir seu público e oferecer algo de valor.",
@@ -175,33 +162,18 @@ export const translations = {
       source_code_link: "https://github.com/vitorluigiorsini/nlw-return/",
     },
     {
-      name: "Find Your Duo",
-      description: {
-        "pt-br": "Aplicação web full stack e mobile para encontrar colegas e agendar partidas de jogos.",
-        en: "API, Web, and Mobile application to find peers and schedule matches.",
-      },
-      tags: [
-        { name: "React", color: "blue-text-gradient" },
-        { name: "NodeJs", color: "green-text-gradient" },
-        { name: "TypeScript", color: "pink-text-gradient" },
-        { name: "React Native", color: "orange-text-gradient" },
-      ],
-      image: "/images/projects/findDuo.png",
-      source_code_link: "https://github.com/vitorluigiorsini/nlw-eSports/",
-    },
-    {
       name: "Portfolio",
       description: {
-        "pt-br": "Um site de portfólio moderno criado com React e ThreeJs.",
-        en: "A modern portfolio website created with React and ThreeJs.",
+        "pt-br": "Site de portfólio moderno criado com Next.js, TypeScript e Tailwind CSS, apresentando background Canvas 2D animado e suporte a múltiplos idiomas.",
+        en: "Modern portfolio website built with Next.js, TypeScript, and Tailwind CSS, featuring animated Canvas 2D background and multilingual support."
       },
       tags: [
-        { name: "React", color: "blue-text-gradient" },
-        { name: "Javascript", color: "green-text-gradient" },
-        { name: "ThreeJs", color: "orange-text-gradient" },
+        { name: "Next.js", color: "blue-text-gradient" },
+        { name: "TypeScript", color: "green-text-gradient" },
+        { name: "Tailwind CSS", color: "pink-text-gradient" },
       ],
       image: "/images/projects/portfolio.png",
-      source_code_link: "https://github.com/vitorluigiorsini/vitororsini/",
+      source_code_link: "https://github.com/vitorluigiorsini/vitororsini-next/",
     },
     {
       name: "ECommerce API",
@@ -235,7 +207,7 @@ export const translations = {
     message: { "pt-br": "Sua menssagem", en: "Your message" },
     messagePlaceholder: { "pt-br": "O que você gostaria de falar?", en: "What do you want to say?" },
     send: { "pt-br": "Enviar", en: "Send" },
-    sending: { "pt-br": "Enviando...", en: "Sending..." },
+    sending: { "pt-br": "Enviando", en: "Sending" },
     sentOk: {
       "pt-br": "✔️ Obrigado. Entrarei em contato o mais breve possível.",
       en: "✔️ Thank you. I will get back to you as soon as possible.",

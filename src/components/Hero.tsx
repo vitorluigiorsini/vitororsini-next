@@ -16,7 +16,7 @@ export function Hero() {
         </div>
 
         <div>
-          <h1 className="text-text-primary font-bold text-5xl sm:text-4xl xl:text-5xl">
+          <h1 className="text-text-primary font-bold text-4xl sm:text-4xl xl:text-5xl">
             {t(heroText.greeting)} <span className="text-secondary">{t(heroText.name)}</span>
           </h1>
           <p className="text-text-secondary mt-2 text-lg">{t(heroText.role)}</p>
