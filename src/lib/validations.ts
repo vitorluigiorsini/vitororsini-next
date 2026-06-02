@@ -3,13 +3,13 @@ import { z } from "zod";
 export const contactSchema = z.object({
   name: z
     .string()
-    .min(2, "Name must have at least 2 characters")
-    .max(100, "Name must have at most 100 characters"),
-  email: z.string().email("Invalid email address"),
+    .min(2, "Nome precisa ter no mínimo 2 caracteres")
+    .max(100, "Nome pode ter no máximo 100 caracteres"),
+  email: z.email("Endereço de email inválido"),
   message: z
     .string()
-    .min(10, "Message must have at least 10 characters")
-    .max(5000, "Message must have at most 5000 characters"),
+    .min(10, "Mensagem precisa ter no mínimo 10 caracteres")
+    .max(5000, "Mensagem pode ter no máximo 5000 caracteres"),
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;
